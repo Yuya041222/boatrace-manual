@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー向けマニュアル | ボートレース予測システム</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body data-version="1.0.0">
+    <header class="page-header">
+      <h1>ユーザー向けマニュアル</h1>
+      <p>ボートレース予測システムを利用する一般ユーザー向けの操作ガイドです。ログインから予測確認、履歴参照、ログアウトまで、一連のフローを画面付きで詳しく説明します。</p>
+      <div class="meta">バージョン: <span id="manual-version">-</span>／最終更新: <time id="manual-updated">-</time></div>
+      <div class="toc-wrapper">
+        <nav aria-label="ページ内目次" class="toc toc-panel">
+          <h2>目次</h2>
+          <ol>
+            <li><a href="#requirements">利用前の準備</a></li>
+            <li><a href="#login">ログイン</a></li>
+            <li><a href="#dashboard">最新予測ダッシュボード</a>
+              <ol>
+                <li><a href="#dashboard-overview">画面概要</a></li>
+                <li><a href="#dashboard-venues">会場サマリーを確認</a></li>
+                <li><a href="#dashboard-filter">確率フィルターと推奨のみ表示</a></li>
+                <li><a href="#dashboard-racecard">レースカードの読み方</a></li>
+                <li><a href="#dashboard-detail">詳細テーブルの活用</a></li>
+              </ol>
+            </li>
+            <li><a href="#history">予測履歴の閲覧</a></li>
+          <li><a href="#account">アカウント</a></li>
+            <li><a href="#faq">FAQ / トラブルシューティング</a></li>
+          </ol>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="requirements" class="section">
+        <h2>1. 利用前の準備</h2>
+        <ol>
+          <li>推奨ブラウザ: Google Chrome 最新版、Microsoft Edge 最新版。Safari でも閲覧できますが最新バージョンに更新してください。</li>
+          <li>管理者から配布された「メールアドレス」「初期パスワード」「ログインURL（例: <code>https://boatrace-system-frontend-xxxxx/</code>）」を手元に準備します。</li>
+          <li>VPN 経由でのアクセスが必要な組織ネットワークでは、接続状態を確認してから操作を始めてください。</li>
+          <li>端末は個人利用または社用端末を利用し、共有PCの場合はログアウトとブラウザ終了を徹底してください。</li>
+        </ol>
+        <p class="tip">配布資料でログインに関する変更が案内されることがあります。最新の手順書がある場合はそちらを優先してください。</p>
+      </section>
+
+      <section id="login" class="section">
+        <h2>2. ログイン</h2>
+        <figure class="screenshot">
+          <img src="../assets/images/login.png" alt="ログイン画面のスクリーンショット" loading="lazy">
+          <figcaption>1) ログイン画面（画像を差し替えてください）</figcaption>
+        </figure>
+        <ol>
+          <li>ブラウザで <code>https://&lt;フロントエンドURL&gt;/login</code> にアクセスします。</li>
+          <li>配布されたメールアドレスとパスワードを入力し「ログイン」を押下します。</li>
+          <li>初回ログイン後は <a href="#account">アカウント＆セキュリティ</a> を参考にパスワードを変更してください。</li>
+        </ol>
+        <figure class="screenshot">
+          <img src="../assets/images/dashboard-nav.png" alt="ログイン直後のヘッダーナビゲーション" loading="lazy">
+          <figcaption>2) ログイン成功後はナビゲーションとユーザー情報が表示されます</figcaption>
+        </figure>
+        <p class="note">ログインに失敗する場合は、メールアドレスの大文字・小文字、全角/半角の混在、CapsLock の誤操作、ブラウザの自動入力の上書きを確認してください。</p>
+      </section>
+
+      <section id="dashboard" class="section">
+        <h2>3. 最新予測ダッシュボード</h2>
+
+        <article id="dashboard-overview" class="subsection">
+          <h3>3.1 画面概要</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/predictions-today-overview.png" alt="最新予測ダッシュボードの全体ビュー" loading="lazy">
+            <figcaption>1) 最新予測ダッシュボード全体（会場サマリー＋レース一覧）</figcaption>
+          </figure>
+          <ol>
+            <li>ページ上部に当日の日付・モデルバージョンが表示されます。</li>
+            <li>左側に会場サマリー、右側に選択中会場のレースカードが表示されます。</li>
+            <li>画面右上のナビゲーションから「予測履歴」「アカウント管理（管理者のみ）」へ移動できます。</li>
+          </ol>
+        </article>
+
+        <article id="dashboard-venues" class="subsection">
+          <h3>3.2 会場サマリーを確認</h3>
+        <figure class="screenshot">
+          <img src="../assets/images/predictions-venue-list.png" alt="会場サマリーのスクリーンショット" loading="lazy">
+          <figcaption>1) 会場サマリー（会場ごとのレース数と推奨艇件数を確認）</figcaption>
+        </figure>
+          <ol>
+            <li>左側の会場一覧には、会場名・全レース数・推奨レース・推奨艇数が表示されます。</li>
+            <li>目的の会場をクリックすると、その会場のレースカードが右側に表示されます。</li>
+            <li>推奨レース数は現在設定している確率閾値に基づき算出されます。</li>
+          </ol>
+        </article>
+
+        <article id="dashboard-filter" class="subsection">
+          <h3>3.3 確率フィルターと推奨のみ表示</h3>
+        <figure class="screenshot">
+          <img src="../assets/images/predictions-filter.png" alt="確率フィルターのスクリーンショット" loading="lazy">
+          <figcaption>1) 確率フィルターと「推奨のみ表示」トグル</figcaption>
+        </figure>
+          <ol>
+            <li>スライダーで 0〜100(%) の範囲で2連対確率の閾値を設定できます。</li>
+            <li>「推奨レースのみ表示」を有効にすると、閾値未満のレースカードが非表示になります。</li>
+            <li>閾値の変更は会場サマリー・レースカード双方にリアルタイムで反映されます。</li>
+          </ol>
+        </article>
+
+        <article id="dashboard-racecard" class="subsection">
+          <h3>3.4 レースカードの読み方</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/predictions-racecard.png" alt="レースカードのスクリーンショット" loading="lazy">
+            <figcaption>1) レースカード（推奨艇ピルと締切予定時刻を確認）</figcaption>
+          </figure>
+          <ol>
+            <li>カード上部に会場名・レース番号・締切予定時刻が表示されます。</li>
+            <li>推奨艇は色付きピルで表示され、確率と艇番号が確認できます。</li>
+          </ol>
+        </article>
+
+        <article id="dashboard-detail" class="subsection">
+          <h3>3.5 詳細テーブルの活用</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/predictions-detail-button.png" alt="レースカードの詳細ボタン" loading="lazy">
+            <figcaption>1) レースカード左側の「詳細」ボタンをクリック</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/predictions-detail-table.png" alt="詳細テーブル展開後のスクリーンショット" loading="lazy">
+            <figcaption>2) 詳細テーブル展開後（艇ごとの指標を確認）</figcaption>
+          </figure>
+          <ol>
+            <li>「詳細」ボタンを押すと、艇番号・登録番号・級別・当地/全国成績・モーター/ボート勝率等のステータスを確認できます。</li>
+            <li>詳細テーブルは再度「詳細」ボタンを押すと閉じることができます。</li>
+          </ol>
+        </article>
+      </section>
+
+      <section id="history" class="section">
+        <h2>4. 予測履歴の閲覧</h2>
+        <figure class="screenshot">
+          <img src="../assets/images/history-nav-button.png" alt="ナビゲーションの予測履歴ボタン" loading="lazy">
+          <figcaption>1) 画面右上ナビゲーションから「予測履歴」を選択</figcaption>
+        </figure>
+        <figure class="screenshot">
+          <img src="../assets/images/history-calendar.png" alt="履歴カレンダーのスクリーンショット" loading="lazy">
+          <figcaption>2) 履歴ページのカレンダー（月単位で予測データ有無を確認）</figcaption>
+        </figure>
+        <figure class="screenshot">
+          <img src="../assets/images/history-venue-list.png" alt="履歴ページの会場一覧" loading="lazy">
+          <figcaption>3) 履歴の会場一覧（推奨レース数を確認）</figcaption>
+        </figure>
+        <figure class="screenshot">
+          <img src="../assets/images/history-racecard.png" alt="履歴レースカードのスクリーンショット" loading="lazy">
+          <figcaption>4) 過去レースカード（推奨艇のハイライトが残ります）</figcaption>
+        </figure>
+        <ol>
+          <li>カレンダーで対象日をクリックすると、その日の会場一覧が左側に表示されます。</li>
+          <li>データが存在する日付は色が濃く表示されます。</li>
+          <li>会場ボタンをクリックすると、その日に開催されたレースカードが表示されます。</li>
+          <li>最新予測と同様に、確率フィルターや「推奨のみ表示」トグルが使用可能です。</li>
+        </ol>
+      </section>
+
+      <section id="account" class="section">
+        <h2>5. アカウント</h2>
+        <article class="subsection">
+          <h3>5.1 パスワード変更</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/account-menu.png" alt="ユーザーメニューのスクリーンショット" loading="lazy">
+            <figcaption>1) 画面右上のユーザーメニューから「パスワード変更」を選択</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/account-password-modal.png" alt="パスワード変更モーダル" loading="lazy">
+            <figcaption>2) パスワード変更モーダル（現在・新しいパスワードを入力）</figcaption>
+          </figure>
+          <ol>
+            <li>画面右上のプロフィール名をクリックし、「パスワード変更」を選択します。</li>
+            <li>現在のパスワード、新しいパスワード（確認用含む）を入力し「更新する」を押します。</li>
+            <li>変更が成功すると、緑色の成功メッセージが表示されます。念のためログアウト後に再ログインして確認してください。</li>
+          </ol>
+          <p class="note">英大文字・小文字・数字・記号を含む 10 文字以上のパスワードを推奨します。使い回しは避けてください。</p>
+        </article>
+
+        <article class="subsection">
+          <h3>5.2 ログアウト</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/account-logout.png" alt="ログアウトボタンのスクリーンショット" loading="lazy">
+            <figcaption>1) ユーザーメニューから「ログアウト」を選択</figcaption>
+          </figure>
+          <ol>
+            <li>右上のメニューから「ログアウト」を選択すると、セッションが破棄されログイン画面へ戻ります。</li>
+            <li>共有端末では必ずログアウトし、ブラウザを終了してください。</li>
+          </ol>
+          <p class="tip">長時間操作しないと自動的にセッションが切れます。表示された場合は再度ログインしてください。</p>
+        </article>
+      </section>
+
+      <section id="faq" class="section">
+        <h2>6. FAQ / トラブルシューティング</h2>
+        <dl>
+          <dt>Q. ログインに失敗する</dt>
+          <dd>A. 入力内容を見直し、それでも解決しない場合は管理者にパスワードリセットを依頼してください。アカウントが無効化されている可能性もあります。</dd>
+
+          <dt>Q. 最新データに更新されない</dt>
+          <dd>A. 数分待ってブラウザをリロードしてください。更新処理は毎日おおよそ22:30頃に実行されます。それでも更新されない場合は管理者に問い合わせてください。</dd>
+
+          <dt>Q. 画面が崩れて表示される</dt>
+          <dd>A. ブラウザを最新バージョンにアップデートし、キャッシュクリアまたはシークレットウィンドウで再試行してください。異なるブラウザでも発生するか確認します。</dd>
+
+          <dt>Q. 予測値が表示されないレースがある</dt>
+          <dd>A. バックエンドがまだデータを取り込み中の可能性があります。時間をおいて再表示するか、管理者に状況を確認してください。</dd>
+        </dl>
+        <p class="note">操作で不明点がある場合は、開発チームまたは管理者にスクリーンショットを添えて問い合わせると迅速に対応できます。</p>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p><a href="../index.html">ポータルに戻る</a></p>
+    </footer>
+    <script>
+      (function () {
+        const versionEl = document.getElementById('manual-version');
+        const updatedEl = document.getElementById('manual-updated');
+        if (versionEl) {
+          versionEl.textContent = document.body.dataset.version || '1.0.0';
+        }
+        if (updatedEl) {
+          const d = new Date(document.lastModified);
+          updatedEl.textContent = d.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        }
+      })();
+    </script>
+  </body>
+</html>

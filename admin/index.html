@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者向けマニュアル | ボートレース予測システム</title>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body data-version="1.0.0">
+    <header class="page-header">
+      <h1>管理者向けマニュアル</h1>
+      <p>ボートレース予測システムの運用担当者（管理者）向けの操作ガイドです。アカウント管理、データ監視、トラブル対応を実際の画面とともに説明します。</p>
+      <div class="meta">バージョン: <span id="manual-version">-</span>／最終更新: <time id="manual-updated">-</time></div>
+      <div class="toc-wrapper">
+        <nav aria-label="ページ内目次" class="toc toc-panel">
+          <h2>目次</h2>
+          <ol>
+            <li><a href="#overview">管理者の役割</a></li>
+            <li><a href="#login">管理者ログインと権限確認</a></li>
+            <li><a href="#account-operations">アカウント運用</a>
+              <ol>
+                <li><a href="#account-create">アカウント発行</a></li>
+                <li><a href="#account-import">一括登録</a></li>
+                <li><a href="#account-reset">パスワードリセット</a></li>
+                <li><a href="#account-delete">アカウント無効化</a></li>
+              </ol>
+            </li>
+          <li><a href="#faq">FAQ</a></li>
+          </ol>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="overview" class="section">
+        <h2>1. 管理者の役割</h2>
+        <ol>
+          <li>ユーザーアカウントの発行・権限管理・仮パスワードの連絡。</li>
+          <li>データ更新状況（スクレイピング・予測ジョブ）の監視と初期トラブルシュート。</li>
+          <li>問い合わせへの一次対応（ログイン不可、データ未反映など）。</li>
+          <li>障害発生時の記録保持と開発チームへのエスカレーション。</li>
+        </ol>
+        <p class="note">管理者自身のアカウント情報は常に最新の状態（強固なパスワード、二次連絡手段の確保）に保ってください。</p>
+      </section>
+
+      <section id="login" class="section">
+        <h2>2. 管理者ログインと権限確認</h2>
+        <figure class="screenshot">
+          <img src="../assets/images/admin-login.png" alt="管理者ログイン画面のスクリーンショット" loading="lazy">
+          <figcaption>管理者もユーザーと同じログインページを利用します</figcaption>
+        </figure>
+        <ol>
+          <li><code>https://&lt;フロントエンドURL&gt;/login</code> にアクセスし、管理者用のメールアドレス/パスワードでログインします。</li>
+          <li>ログイン後、左上プロフィールのロール表示が <code>管理者</code> になっていることを確認します。</li>
+        </ol>
+        <figure class="screenshot">
+          <img src="../assets/images/admin-dashboard.png" alt="管理者ログイン後のダッシュボード" loading="lazy">
+          <figcaption>ログイン後、ナビゲーションに「アカウント管理」が表示されます</figcaption>
+        </figure>
+        <p class="note">アカウント管理メニューが表示されない場合は、アカウントロールが user になっている可能性があります。別管理者または開発チームにロール変更を依頼してください。</p>
+      </section>
+
+      <section id="account-operations" class="section">
+        <h2>3. アカウント運用</h2>
+
+        <article id="account-create" class="subsection">
+          <h3>3.1 アカウント発行</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-nav-account.png" alt="ナビゲーションのアカウント管理ボタン" loading="lazy">
+            <figcaption>1) ナビゲーションから「アカウント管理」を選択</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-accounts.png" alt="アカウント管理画面のスクリーンショット" loading="lazy">
+            <figcaption>2) アカウント一覧ページ（右上に操作ボタンが並びます）</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-account-create-button.png" alt="アカウント発行ボタン" loading="lazy">
+            <figcaption>3) 「アカウント発行」ボタンをクリック</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-create-modal.png" alt="アカウント発行モーダル" loading="lazy">
+            <figcaption>4) 氏名・メールアドレス・仮パスワード・権限を入力</figcaption>
+          </figure>
+          <ol>
+            <li>最新予測ページ右上のナビゲーションから「アカウント管理」をクリック。</li>
+            <li>一覧ページ右上の「アカウント発行」を選択し、モーダルに必要情報を入力します。</li>
+            <li>仮パスワードは英数字・記号を含む強い値を設定し、後で利用者に安全な手段で共有します。</li>
+            <li>登録後、成功メッセージが表示されユーザー一覧に新しいアカウントが追加されます。</li>
+          </ol>
+          <p class="note">既存メールアドレスで作成した場合は、無効化済みユーザーが再有効化されます。履歴情報は引き継がれます。</p>
+        </article>
+
+        <article id="account-import" class="subsection">
+          <h3>3.2 一括登録</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-download-template.png" alt="テンプレートダウンロードボタン" loading="lazy">
+            <figcaption>1) 「テンプレートをダウンロード」でExcelひな形を取得</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-import-template.png" alt="Excelテンプレート記入例" loading="lazy">
+            <figcaption>2) テンプレート（記入例はアップロード前に削除）</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-import.png" alt="一括登録モーダルのスクリーンショット" loading="lazy">
+            <figcaption>3) ファイルを選択してアップロード</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-import-result.png" alt="一括登録結果のメッセージ" loading="lazy">
+            <figcaption>4) 成功件数・失敗件数が表示されます</figcaption>
+          </figure>
+          <ol>
+            <li>アカウント管理ページ右上の「一括登録」をクリックし、テンプレートをダウンロードします。</li>
+            <li>Excel テンプレートに氏名 / メールアドレス / 初期パスワード / 権限を入力し、記入例行を削除して保存します。</li>
+            <li>アップロード後、成功・失敗件数が表示されます。失敗行は内容を修正のうえ再アップロードしてください。</li>
+            <li>成功したユーザーへ仮パスワードを連絡し、初回ログイン後の変更を依頼します。</li>
+          </ol>
+          <p class="tip">大量登録時は事前にメールアドレス重複をチェックしておくと、失敗件数を減らせます。</p>
+        </article>
+
+        <article id="account-reset" class="subsection">
+          <h3>3.3 パスワードリセット</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-reset-button.png" alt="パスワードリセットボタン" loading="lazy">
+            <figcaption>1) 対象ユーザーの「パスワードリセット」ボタンを押下</figcaption>
+          </figure>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-reset-toast.png" alt="仮パスワード表示例" loading="lazy">
+            <figcaption>2) 仮パスワードが画面に表示されます</figcaption>
+          </figure>
+          <ol>
+            <li>対象ユーザーの行にある「パスワードリセット」をクリックします。</li>
+            <li>新しい仮パスワードが表示されるので、コピーして安全な手段で利用者に伝達します。</li>
+            <li>利用者にはログイン後に必ずパスワード変更を行うよう案内してください。</li>
+          </ol>
+          <p class="note">仮パスワードは再表示できません。共有前に必ず控えておいてください。</p>
+        </article>
+
+        <article id="account-delete" class="subsection">
+          <h3>3.4 アカウント無効化</h3>
+          <figure class="screenshot">
+            <img src="../assets/images/admin-delete-button.png" alt="削除ボタンのスクリーンショット" loading="lazy">
+            <figcaption>1) 対象ユーザーの「削除」ボタンをクリック</figcaption>
+          </figure>
+          <ol>
+            <li>削除操作は論理削除です。メールアドレスは履歴に残り、再発行で復活できます。</li>
+            <li>自分自身のアカウントは削除できません。権限移譲時は別管理者で対応してください。</li>
+            <li>無効化されたユーザーはログイン不可となります。必要に応じて再発行してください。</li>
+          </ol>
+        </article>
+      </section>
+
+      <section id="faq" class="section">
+        <h2>4. FAQ</h2>
+        <dl>
+          <dt>Q. ユーザーから「メールが届かない」と問い合わせがあった</dt>
+          <dd>A. メール送信機能は未実装です。発行した仮パスワードは安全なチャネル（口頭、社内チャット等）で直接連絡してください。</dd>
+
+          <dt>Q. 誤ってユーザーを削除した</dt>
+          <dd>A. 同じメールアドレスで再発行すると復元できます。過去の操作ログは残るため、誤操作の経緯を共有してください。</dd>
+
+          <dt>Q. スクレイピング対象サイトの構造が変わった</dt>
+          <dd>A. 予測データが取得できなくなる可能性があるため、すぐに開発チームへ連絡してください。変更内容が分かるスクリーンショットを添付するとスムーズです。</dd>
+        </dl>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p><a href="../index.html">ポータルに戻る</a></p>
+    </footer>
+    <script>
+      (function () {
+        const versionEl = document.getElementById('manual-version');
+        const updatedEl = document.getElementById('manual-updated');
+        if (versionEl) {
+          versionEl.textContent = document.body.dataset.version || '1.0.0';
+        }
+        if (updatedEl) {
+          const d = new Date(document.lastModified);
+          updatedEl.textContent = d.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        }
+      })();
+    </script>
+  </body>
+</html>
